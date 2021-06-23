@@ -1,0 +1,164 @@
+<html>
+<head>
+<title>VirtualBox xTER Help</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style>
+.A {
+	font-family: Courier;
+	font-size:18px;
+	margin:10px auto;
+	padding:15px;
+	background:#fed;
+}
+.B {
+	font-family: Courier;
+	font-size:30px;
+	margin:10px auto;
+	padding:15px;
+	background:#fed;
+}
+</style>
+</head>
+<body style="background:#def;">
+
+<div class=B>UPDATE 23.06.21 == for xTER version 1.26 (i.e. Room-House edition), use this script to create a headless VM:</div>
+<div class=A>
+
+=== cut here ===<br>
+#!/bin/bash<br>
+mkdir -p ~/VB && cd ~/VB<br>
+vboxmanage createvm --name xTER --ostype RedHat_64 --register --basefolder `pwd`<br>
+vboxmanage modifyvm xTER --memory 5120 --cpus 2 --audio none --firmware efi --nic1 nat --nataliasmode1 proxyonly<br>
+vboxmanage modifyvm xTER --natpf1 "https,tcp,,8443,,443"<br>
+vboxmanage modifyvm xTER --natpf1 "chat,tcp,,8843,,8443"<br>
+vboxmanage createmedium --filename 2G.vdi --size 2000<br>
+vboxmanage storagectl xTER --name SATA --add sata<br>
+vboxmanage storageattach xTER --storagectl SATA --medium loop.vdi --port 0 --type hdd<br>
+vboxmanage storageattach xTER --storagectl SATA --medium 2G.vdi --port 1 --type hdd<br>
+vboxmanage modifyvm xTER --boot1 disk --boot2 none --boot3 none --boot4 none<br>
+===cut here ===<br>
+
+</div>
+<div class=B>
+NB: The file "loop.vdi" is not created by you, instead get it from our site download area. It's a small (~1Mb) VDI file with our bootloader inside, you can extract it if you want.<br><br>
+NB: The second VDI disk is only 2G here. It's small and it's enough for Room-House storage only. If you intend to store a blockchain, do increase this file appropriately, like "60000" and "60G". Do it yourself. You can modify your VM later, but you will have to discard the old VDI storage and create a brand-new empty one with a needed increase of size, from scratch.<br><br>
+
+NB: For the virtual machine with a Polkadot node (like Pirl), also modify the port forwarding to allow for additional ports, --port 30333 --ws-port 9944 --rpc-port 9933 --prometheus-port 9615:<br><br>
+</div>
+<div class=A>
+vboxmanage modifyvm xTER --natpf1 "polkadot_port1,tcp,,30333,,30333"<br>
+vboxmanage modifyvm xTER --natpf1 "polkadot_port2,tcp,,9944,,9944"<br>
+vboxmanage modifyvm xTER --natpf1 "polkadot_port3,tcp,,9933,,9933"<br>
+vboxmanage modifyvm xTER --natpf1 "polkadot_port4,tcp,,9615,,9615"<br>
+</div>
+
+<div class=B>Graphics VB interface, older help file (xTER version 1.21)</div>
+<div class=A>
+1. Hello, download and install Oracle VirtualBox from their site (https://www.virtualbox.org/wiki/Downloads). Just proceed with creating a new virtual machine as shown in Picture#1. Select Linux/RedHat 64-bit. NB: Remember to check if VT (Virtualization Technology) is enabled in BIOS, separately for Intel or AMD chips, or you may see only 32-bit versions in the list. Also, on Windows, you may find it necessary to turn off the Hyper-V to allow for the 64-bit VMs.
+</div>
+<img src=xter1.png>
+
+<div class=A>
+2. Ok. Picture#2, and you're to select the size of RAM for the xTER virtual. Select 8Gb, if you can. If not, then at least 5Gb RAM for most of editions. For xTER Router Edition, we squeezed the whole thing to fit into 2GB of RAM. You may change it later, set it 5Gb for now if not sure.
+</div>
+<img src=xter2.png>
+
+<div class=A>
+3. Just proceed and select the VDI type as shown in Picture#3.
+</div>
+<img src=xter3.png>
+
+<div class=A>
+4. The default size of the partition  is 8Gb as shown in Picture#4. Accept the default if not sure.
+</div>
+<img src=xter4.png>
+
+<div class=A>
+5. Ok, that's it with creating the xTER VM. Now let's set up other things as shown in Pictures#5,6,7... Important - check Enable EFI to "on" as shown in Picture#5. It's "off" by default. You need EFI to boot the xTER VM.
+</div>
+<img src=xter5.png>
+
+<div class=A>
+6. Select as many CPU cores as you really have on your physical: 1,2,4..
+</div>
+<img src=xter6.png>
+
+<div class=A>
+7. Create a new "hard disk" file with .vdi extension attached to the SATA-0 controller, as shown in Picture#7. Check the "SSD" box if your comp's physical drive is a solid-state drive.
+</div>
+<img src=xter7.png>
+
+<div class=A>
+8. Now we take care of the Network. Just copy what you see in Picture#8 as your new Port Forwarding rules.
+</div>
+<img src=xter8.png>
+
+
+<div class=A>
+10. OK, you are ready to PowerOn your xTER VM. Take a look at Picture#10 before you push the "Start" button, all right? Not explaining the sound section, just copy as you see in the picture - select ALSA and ICH AC97.
+</div>
+<img src=xter10.png>
+
+<div class=B> you don't need to read pp.11 - 13 if you're not using a flash for bootloader/ No need of Extension pack. Use our "loop.vdi" small file as boot disk instead. </div>
+<div class=A>
+11. You pushed the "Start"  - and then it all stopped. I guess you know that you need install also Extension pack for the USB to work?  Explanation: the UEFI doesn't find this Cruizer flash, but I know why and how to make it be found. Stay cool. First - unplug the USB camera. Second - unplug the Cruizer flash. Now, plug the cruizer (flash) back. Yes, only the flash now, not the camera (later), - cool it in the air for 1-2 seconds and plug back, and now, now -  type the holy "map -r" command in the Shell.
+</div>
+<img src=xter11.png>
+
+<div class=A>
+12. That's what you get - see in Picture#12. See this "FS0" up there, after "map -r"? We got it, this time. It's our flash with the bootloader, ok. Now, plug back the USB camera.
+</div>
+<img src=xter12.png>
+
+<div class=A>
+13.  And then type in the Shell these commands: a) fs0: b) cd efi\boot c) bootx64.efi - and here we go.
+</div>
+<img src=xter13.png>
+
+<div class=A>
+14. Welcome to the xTER bootloader. Loading.. [ and you may have been a luckier people than us if you got the boot from the flash straight without USB conflicts, then you skipped the Steps 11-13.]
+</div>
+<img src=xter14.png>
+
+<div class=A>
+15. Finished downloading, now it's unpacking. We don't do anything but wait.
+</div>
+<img src=xter15.png>
+
+<div class=A>
+16. Finished unpacking, now starting the system. We wait a couple of minutes here.
+</div>
+<img src=xter16.png>
+
+<div class=A>
+17. And finally, the virtual machine is up and running. Congratulations. Let's get in. You'll need a browser. Of course, you are on the physical. Let's use any browser present on your physical. 
+</div>
+<img src=xter17.png>
+
+<div class=A>
+18. I use a Chrome browser and type in this URL - https://192.168.88.99:8443 - that's where the admin interface begins, but. WTF? Some warnings. Because the default HTTPS certificates are not suitable for all cases (they are only good for our demo site at https://demo.xter.tech), and if you don't want these warnings - you must issue your own HTTPS certs and upload them from the Settings menu later. For now, proceed with the down link. No sweat. And the IP in my URL - it's 192.168.88.99, and it's the IP of my physical. You should know YOUR PHYSICAL MACHINE'S INTERNAL IPv4, somehow. No luck?.. really? I can't help, sorry. We can't proceed any further in this case. Thanks for your time. But ask google - How do I know my comp's internal IP? - it will help. Of course. And if you plugged a WiFi USB pen earlier - then the IP for connecting through WiFi is 192.168.56.254, and the port would still be 8443.
+</div>
+<img src=xter18.png>
+
+<div class=A>
+19. Bingo! The default admin's password is seen in the Picture#17. The first thing to do after logging in - go to Settings and change it, and a WiFi key, too. The sooner, the better. Really.
+</div>
+<img src=xter19.png>
+
+<div class=A>
+20. OK, we are in the Settings Menu. Click on the red "[!]" by the side of the labels in the second vertical submenu. The current admin password and the WiFi key ARE DISPLAYED THIS WAY. Rememeber.
+</div>
+<img src=xter20.png>
+
+<div class=A>
+21. Now, I change the WiFi key. WTF, what is "como_estas"? It's not the key, right. The corresponding key would be as shown in Picture#20. A "como_estas" is my "key phrase" from which the key shown above is auto-generated. You don't change the key directly, you change the key phrase. OK? The same way you change the admin password. Please do it now.
+</div>
+<img src=xter21.png>
+
+<div class=A>
+22. When you change these settings, you're urged to understand that it's better to WRITE DOWN THE NEW PASSWORD BEFORE IT'S TOO LATE - if you don't remember the password that you have saved, you cannot login any more and you'll have to remove the "data" folder from your EFI bootloader flash drive (FS0:\efi\data), then force stop the virtual and boot it again - to the default password and WiFi key.
+</div>
+<img src=xter22.png>
+
+</body>
+</html>
