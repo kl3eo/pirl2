@@ -1,5 +1,14 @@
 #!/bin/bash
+
 mkdir -p ~/VB && cd ~/VB
+
+if [ -f /opt/loop.vdi ]; then
+        cp -a /opt/loop.vdi ./
+else
+        echo File /opt/loop.vdi not found. Exiting
+        exit
+fi
+
 vboxmanage createvm --name xTER --ostype RedHat_64 --register --basefolder `pwd`
 vboxmanage modifyvm xTER --memory 5120 --cpus 2 --audio none --firmware efi --nic1 nat --nataliasmode1 proxyonly
 vboxmanage modifyvm xTER --natpf1 "https,tcp,,8443,,443"
