@@ -770,7 +770,7 @@ parameter_types! {
 }
 
 parameter_types! {
-	pub Prefix: &'static [u8] = b"Pay DOTs to the Polkadot account:";
+	pub Prefix: &'static [u8] = b"Pay PIRLs to the Pirl account:";
 }
 
 impl claims::Config for Runtime {
