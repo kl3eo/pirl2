@@ -11,8 +11,8 @@ fi
 
 vboxmanage createvm --name xTER --ostype RedHat_64 --register --basefolder `pwd`
 vboxmanage modifyvm xTER --memory 5120 --cpus 2 --audio none --firmware efi --nic1 nat --nataliasmode1 proxyonly
-vboxmanage modifyvm xTER --natpf1 "https,tcp,,8443,,443"
-vboxmanage modifyvm xTER --natpf1 "chat,tcp,,8843,,8443"
+vboxmanage modifyvm xTER --natpf1 "chat,tcp,,8443,,443"
+vboxmanage modifyvm xTER --natpf1 "admin,tcp,,8843,,8443"
 vboxmanage createmedium --filename 2G.vdi --size 2000
 vboxmanage storagectl xTER --name SATA --add sata
 vboxmanage storageattach xTER --storagectl SATA --medium loop.vdi --port 0 --type hdd
