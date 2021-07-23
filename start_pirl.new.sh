@@ -1,11 +1,11 @@
 #!/bin/bash
 
-#download binary from : https://room-house.com/pirl_0.8.29_07222021
+#download binary
 #and place it to /opt/nvme/
 
 cd /opt/nvme && wget https://room-house.com/pirl_0.8.29_07232021
 
-#download library from : https://room-house.com/libstdc++.so.6.0.28
+#download library 
 #and place it to /usr/local/lib64/
 
 cd /usr/local/lib64 && wget https://room-house.com/libstdc++.so.6.0.28
