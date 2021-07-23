@@ -3,7 +3,7 @@
 #download binary
 #and place it to /opt/nvme/
 
-cd /opt/nvme && wget https://room-house.com/pirl_0.8.29_07232021
+cd /opt/nvme && wget https://room-house.com/pirl_0.8.29_07232021 && chmod +x pirl_0.8.29_07232021
 
 #download library 
 #and place it to /usr/local/lib64/
