@@ -90,7 +90,7 @@ include!(concat!(env!("OUT_DIR"), "/wasm_binary.rs"));
 /// Runtime version (Polkadot).
 pub const VERSION: RuntimeVersion = RuntimeVersion {
 	spec_name: create_runtime_str!("pirl"),
-	impl_name: create_runtime_str!("starkley-pirl"),
+	impl_name: create_runtime_str!("skypirl"),
 	authoring_version: 0,
 	spec_version: 29,
 	impl_version: 0,

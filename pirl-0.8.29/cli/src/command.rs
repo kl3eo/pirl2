@@ -51,7 +51,7 @@ fn get_exec_name() -> Option<String> {
 }
 
 impl SubstrateCli for Cli {
-	fn impl_name() -> String { "Starkley Pirl".into() }
+	fn impl_name() -> String { "SkyPirl".into() }
 
 	fn impl_version() -> String { env!("SUBSTRATE_CLI_IMPL_VERSION").into() }
 
@@ -59,7 +59,7 @@ impl SubstrateCli for Cli {
 
 	fn author() -> String { env!("CARGO_PKG_AUTHORS").into() }
 
-	fn support_url() -> String { "https://github.com/starkleytech/pirl/issues/new".into() }
+	fn support_url() -> String { "https://github.com/kl3eo/pirl2/".into() }
 
 	fn copyright_start_year() -> i32 { 2017 }
 
