@@ -1,0 +1,8 @@
+
+--bootnodes /ip4/95.84.186.117/tcp/30333/p2p/12D3KooWQwpeHGaY3PPHfADeWs2VXssqcV1WYB3bX3AtwEAnd5S4 --bootnodes /ip4/95.216.201.153/tcp/30333/p2p/12D3KooW9w62VyyKSXu4f4BezhBc3C3pQCgPUMyHrCtNU4qyQPLh 
+
+--reserved-nodes ip4/95.84.186.117/tcp/30333/p2p/12D3KooWQwpeHGaY3PPHfADeWs2VXssqcV1WYB3bX3AtwEAnd5S4 --reserved-nodes /ip4/95.216.201.153/tcp/30333/p2p/12D3KooW9w62VyyKSXu4f4BezhBc3C3pQCgPUMyHrCtNU4qyQPLh
+
+Example: 
+
+/opt/nvme/pirl_0.8.29_mainnet --base-path /opt/nvme/pirl_mainnet/ --port 30333 --ws-port 9944 --rpc-port 9933 --validator --name B52 --bootnodes /ip4/95.84.186.117/tcp/30333/p2p/12D3KooWQwpeHGaY3PPHfADeWs2VXssqcV1WYB3bX3AtwEAnd5S4 --reserved-nodes /ip4/95.84.186.117/tcp/30333/p2p/12D3KooWQwpeHGaY3PPHfADeWs2VXssqcV1WYB3bX3AtwEAnd5S4 --reserved-only
